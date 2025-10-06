@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Learning Activity: Grid System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 2vw;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+        }
+
+        .gallery-items {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .gallery-items:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        #modal-caption {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bolder;
+            font-size: xx-large;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="gallery">
+        <div class="container">
+            <div class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-md-3">
+
+                <div class="col">
+                    <img src="img/Jersey.png" class="gallery-items img-fluid" alt="Jersey Sample">
+                </div>
+                <div class="col">
+                    <img src="img/LC.png" class="gallery-items img-fluid" alt="Landro Capul Logo">
+                </div>
+                <div class="col">
+                    <img src="img/Profile.png" class="gallery-items img-fluid" alt="Profile Picture">
+                </div>
+                <div class="col">
+                    <img src="img/makinglogo.png" class="gallery-items img-fluid" alt="Logo Making">
+                </div>
+                <div class="col">
+                    <img src="img/meabout.png" class="gallery-items img-fluid" alt="Landro Capul">
+                </div>
+                <div class="col">
+                    <img src="img/webport.png" class="gallery-items img-fluid" alt="Websit Portfolio">
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="gallery-items" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Image Preview</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                   
+                    <img id="modal-img" src="" class="img-fluid rounded" alt="Preview Image">
+                    <p id="modal-caption"></p>
+
+        
+                    <div class="d-flex justify-content-between mt-3">
+                        <button id="prev-btn" class="btn btn-outline-primary">&laquo; Previous</button>
+                        <button id="next-btn" class="btn btn-outline-primary">Next &raquo;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const galleryItems = document.querySelectorAll(".gallery-items");
+        const modalImg = document.getElementById("modal-img");
+        const modalCaption = document.getElementById("modal-caption");
+        const modal = new bootstrap.Modal(document.getElementById("gallery-items"));
+        let currentIndex = 0;
+
+      
+        galleryItems.forEach((item, index) => {
+            item.addEventListener("click", () => {
+                currentIndex = index;
+                updateModalContent();
+                modal.show();
+            });
+        });
+
+    
+        function updateModalContent() {
+            const currentItem = galleryItems[currentIndex];
+            modalImg.src = currentItem.src;
+            modalCaption.textContent = currentItem.alt || "Image " + (currentIndex + 1);
+        }
+
+      
+        document.getElementById("prev-btn").addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+            updateModalContent();
+        });
+
+        document.getElementById("next-btn").addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % galleryItems.length;
+            updateModalContent();
+        });
+    </script>
+</body>
+
+</html>
